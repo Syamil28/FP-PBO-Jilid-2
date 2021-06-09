@@ -17,7 +17,7 @@ public class Ghost extends Character {
 	protected Image imageNormal;
 	protected int buffFrames;
 	protected boolean scared;
-	protected final int MINDISTANCEFROMPACMAN = 10;
+	protected final int MINDISTANCEFROMPACMAN = 15;
 
 	public Ghost(int x, int y){
 		super(x, y);
@@ -57,6 +57,116 @@ public class Ghost extends Character {
 			this.image = imageNormal;
 			buffFrames = 16;
 		}
+	}
+
+	/**
+	 * Mengembalikan move selanjutnya berdasarkan posisi node 
+	 * relatif dengan posisi pacman saat ini.
+	 * 
+	 * @param node Node move selanjutnya
+	 * @return Move selanjutnya.
+	 */
+	private Move getMove(TreeNode node) {
+		TreeNode nextMoveNode = getNextMoveNode(node);
+		
+		int nodeX = nextMoveNode.data.x();
+		int nodeY = nextMoveNode.data.y();
+		int x = this.getPosition().x();
+		int y = this.getPosition().y();
+		
+		if (nodeX == x-1) return Move.Up;
+		if (nodeX == x+1) return Move.Down;
+		if (nodeY == y-1) return Move.Left;
+		if (nodeY == y+1) return Move.Right;
+		return null;
+	}
+
+	/**
+	 * Mendapatkan node move selanjutnya dengan 
+	 * mengiterasi parent dari node hasil search.
+	 * 
+	 * @param node Node hasil search
+	 * @return node move selanjutnya.
+	 */
+	private TreeNode getNextMoveNode(TreeNode node) {
+		
+		TreeNode parent = node.parent;
+		
+		while(parent != null && !parent.data.equals(this.getPosition())) {
+			node = parent;
+			parent = node.parent;
+		}
+		
+		return node;
+	}
+
+	/**
+	 * Mendapatkan move tersedia dari posisi saat ini.
+	 * 
+	 * @param pos Posisi saat ini
+	 * @param parent Parent dari node saat ini
+	 * @param tile Maze permainan
+	 * @return ArrayList Posisi-posisi move yang tersedia.
+	 */
+	private ArrayList<Position> getAvailableMoves(Position pos, TreeNode parent, int[][] tile) {
+		ArrayList<Position> availableMoves = new ArrayList<Position>();
+		Position par = (parent != null) ? parent.data : new Position(0, 0);
+		int idxX = pos.x();
+		int idxY = pos.y();
+		
+		if (idxX-1 >= 0 && tile[idxX-1][idxY] != 1 && !(idxX-1 == par.x() && idxY == par.y()) ) 
+			availableMoves.add(new Position(idxX-1, idxY));
+		
+		if (idxX+1 <= Level.TILES_Y && tile[idxX+1][idxY] != 1 && !(idxX+1 == par.x() && idxY == par.y())) 
+			availableMoves.add(new Position(idxX+1, idxY));
+		
+		if (idxY-1 >= 0 && tile[idxX][idxY-1] != 1 && !(idxX == par.x() && idxY-1 == par.y())) 
+			availableMoves.add(new Position(idxX, idxY-1));
+		
+		if (idxY+1 <= Level.TILES_X && tile[idxX][idxY+1] != 1 && !(idxX == par.x() && idxY+1 == par.y())) 
+			availableMoves.add(new Position(idxX, idxY+1));
+		
+		return availableMoves;
+	}
+
+	/**
+	 * Mencari posisi untuk lari dengan BFS.
+	 * 
+	 * @param tile Maze permainan
+	 * @param pacman Objek pacman
+	 * @return node saat posisi lari ditemukan.
+	 */
+	private TreeNode runFromPacman(int[][] tile, Pacman pacman) {	
+		Position pacmanPos = pacman.getPosition();
+		
+		TreeNode node = new TreeNode(this.getPosition());
+		Tree searchTree = new Tree(node);
+		Deque<TreeNode> fringe = new ArrayDeque<TreeNode>();
+		HashSet<Position> visited = new HashSet<Position>();
+		fringe.add(node);
+		
+		while (!fringe.isEmpty()) {
+			node = fringe.pop();
+			visited.add(node.data);
+			
+			if (Position.getDistance(node.data, pacmanPos) >= MINDISTANCEFROMPACMAN) {
+				return node;
+			}
+			
+			ArrayList<Position> children = getAvailableMoves(node.data, node.parent, tile);
+			Iterator<Position> i = children.iterator();
+			
+			while (i.hasNext()) {
+				Position childPos = i.next();
+				
+				if(!visited.contains(childPos)) {
+					TreeNode child = new TreeNode(childPos);
+					fringe.addLast(child);
+					searchTree.insert(child, node);	
+				}
+			}
+		}
+		return node;
 	}
 
 }
