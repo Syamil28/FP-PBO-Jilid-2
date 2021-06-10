@@ -1,7 +1,7 @@
 package pacman;
 
 /**
- * Objek tile berupa cherry.
+ * Tile object for Cherry.
  */
 public class Cherry extends Tile {
 

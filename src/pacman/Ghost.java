@@ -9,7 +9,7 @@ import java.util.Iterator;
 import javax.swing.ImageIcon;
 
 /**
- * Objek karakter ghost.
+ * Character object for ghost.
  */
 public class Ghost extends Character {
 	
@@ -26,8 +26,8 @@ public class Ghost extends Character {
 	}
 
 	/**
-	 * Inisialisasi objek.
-	 * Membuat 2 image untuk ghost normal dan scared.
+	 * Object initialization.
+	 * Get 2 images from resources for normal and scared ghost.
 	 */
 	@Override
 	protected void initCharacter() {
@@ -45,7 +45,7 @@ public class Ghost extends Character {
 	}
 
 	/**
-	 * Mengubah status ghost menjadi scared atau normal.
+	 * Set ghost's state to scared or normal
 	 */
 	public void setScared(boolean scared) {
 		this.scared = scared;
@@ -60,12 +60,12 @@ public class Ghost extends Character {
 	}
 
 	/**
-	 * Memilih move selanjutnya berdasarkan status ghost.
-	 * Move selanjutnya dipilih berdasarkan method bersangkutan.
-	 * Setelah didapatkan move, ubah dx dan dy.
+	 * Choosing next move depending on ghost's state.
+	 * The next move is chosen by the concerned method.
+	 * After the move is obtained, change the value of dx and dy.
 	 * 
-	 * @param tile Maze permainan
-	 * @param pacman Objek pacman
+	 * @param tile Maze level
+	 * @param pacman Pacman object
 	 */
 	public void chooseNextMove(int[][] tile, Pacman pacman) {
 		
@@ -115,11 +115,11 @@ public class Ghost extends Character {
 	}
 
 	/**
-	 * Mengembalikan move selanjutnya berdasarkan posisi node 
-	 * relatif dengan posisi pacman saat ini.
+	 * Returning the next move based on node relative position
+	 * to the current position of pacman.
 	 * 
-	 * @param node Node move selanjutnya
-	 * @return Move selanjutnya.
+	 * @param node Next move node
+	 * @return Next move.
 	 */
 	private Move getMove(TreeNode node) {
 		TreeNode nextMoveNode = getNextMoveNode(node);
@@ -137,11 +137,12 @@ public class Ghost extends Character {
 	}
 
 	/**
-	 * Mendapatkan node move selanjutnya dengan 
-	 * mengiterasi parent dari node hasil search.
+	 * Returning the next move node by
+	 * iterating the parent pointers of a node 
+	 * that returned by a search algorithm.
 	 * 
-	 * @param node Node hasil search
-	 * @return node move selanjutnya.
+	 * @param node Node returned by search algorithm 
+	 * @return Next move node.
 	 */
 	private TreeNode getNextMoveNode(TreeNode node) {
 		
@@ -156,29 +157,27 @@ public class Ghost extends Character {
 	}
 
 	/**
-	 * Mendapatkan move tersedia dari posisi saat ini.
+	 * Returning tne available moves of the current position
 	 * 
-	 * @param pos Posisi saat ini
-	 * @param parent Parent dari node saat ini
-	 * @param tile Maze permainan
-	 * @return ArrayList Posisi-posisi move yang tersedia.
+	 * @param pos Current position
+	 * @param tile Maze level
+	 * @return ArrayList with available moves position
 	 */
-	private ArrayList<Position> getAvailableMoves(Position pos, TreeNode parent, int[][] tile) {
+	private ArrayList<Position> getAvailableMoves(Position pos, int[][] tile) {
 		ArrayList<Position> availableMoves = new ArrayList<Position>();
-		Position par = (parent != null) ? parent.data : new Position(0, 0);
 		int idxX = pos.x();
 		int idxY = pos.y();
 		
-		if (idxX-1 >= 0 && tile[idxX-1][idxY] != 1 && !(idxX-1 == par.x() && idxY == par.y()) ) 
+		if (idxX-1 >= 0 && tile[idxX-1][idxY] != 1) 
 			availableMoves.add(new Position(idxX-1, idxY));
 		
-		if (idxX+1 <= Level.TILES_Y && tile[idxX+1][idxY] != 1 && !(idxX+1 == par.x() && idxY == par.y())) 
+		if (idxX+1 <= Level.TILES_Y && tile[idxX+1][idxY] != 1) 
 			availableMoves.add(new Position(idxX+1, idxY));
 		
-		if (idxY-1 >= 0 && tile[idxX][idxY-1] != 1 && !(idxX == par.x() && idxY-1 == par.y())) 
+		if (idxY-1 >= 0 && tile[idxX][idxY-1] != 1) 
 			availableMoves.add(new Position(idxX, idxY-1));
 		
-		if (idxY+1 <= Level.TILES_X && tile[idxX][idxY+1] != 1 && !(idxX == par.x() && idxY+1 == par.y())) 
+		if (idxY+1 <= Level.TILES_X && tile[idxX][idxY+1] != 1) 
 			availableMoves.add(new Position(idxX, idxY+1));
 		
 		return availableMoves;
@@ -198,7 +197,7 @@ public class Ghost extends Character {
 		TreeNode node = new TreeNode(pos);
 		Tree searchTree = new Tree(node);
 		Deque<TreeNode> fringe = new ArrayDeque<TreeNode>();
-		HashSet<Position> visited = new HashSet<Position>();
+		ArrayList<Position> visited = new ArrayList<Position>();
 		fringe.add(node);
 		
 		while (!fringe.isEmpty()) {
@@ -210,7 +209,7 @@ public class Ghost extends Character {
 				return node;
 			}
 			
-			ArrayList<Position> children = getAvailableMoves(node.data, node.parent, tile);
+			ArrayList<Position> children = getAvailableMoves(node.data, tile);
 			Iterator<Position> i = children.iterator();
 			
 			while (i.hasNext()) {
@@ -218,6 +217,7 @@ public class Ghost extends Character {
 				System.out.printf("child: %d %d\n", childPos.x(), childPos.y());
 				
 				if(!visited.contains(childPos)) {
+					System.out.println("Inserted");
 					TreeNode child = new TreeNode(childPos);
 					fringe.addLast(child);
 					searchTree.insert(child, node);	
@@ -241,7 +241,7 @@ public class Ghost extends Character {
 		TreeNode node = new TreeNode(this.getPosition());
 		Tree searchTree = new Tree(node);
 		Deque<TreeNode> fringe = new ArrayDeque<TreeNode>();
-		HashSet<Position> visited = new HashSet<Position>();
+		ArrayList<Position> visited = new ArrayList<Position>();
 		fringe.add(node);
 		
 		while (!fringe.isEmpty()) {
@@ -252,7 +252,7 @@ public class Ghost extends Character {
 				return node;
 			}
 			
-			ArrayList<Position> children = getAvailableMoves(node.data, node.parent, tile);
+			ArrayList<Position> children = getAvailableMoves(node.data, tile);
 			Iterator<Position> i = children.iterator();
 			
 			while (i.hasNext()) {

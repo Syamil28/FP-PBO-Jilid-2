@@ -1,7 +1,7 @@
 package pacman;
 
 /**
- * Kelas abstarct untuk objek karakter (ghost dan pacman).
+ * Abstract class for Character objects(Ghost and Pacman).
  */
 public abstract class Character extends Tile {
 	
@@ -27,9 +27,9 @@ public abstract class Character extends Tile {
     }
     
     /**
-     * Menggerakkan karakter dengan mengubah posisi x dan y.
-     * Mengatur status bergerak dengan increment moveCount.
-     * Jika moveCount = jumlah frame, berhenti bergerak.
+     * Moving the character by changing x and y position.
+     * Set moving status by incrementing moveCount.
+     * If moveCount is equal to frames, stop moving.
      */
 	public void move() {
 		if (moving) {
