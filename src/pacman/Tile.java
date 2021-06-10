@@ -1,7 +1,7 @@
 package pacman;
 
 /**
- * Objek tile (wall, point, cherry).
+ * tile object (wall, point, cherry).
  */
 public abstract class Tile extends Sprite {
 
@@ -12,10 +12,10 @@ public abstract class Tile extends Sprite {
     }
     
 	/**
-	 * Mendapatkan posisi dari objek berdasarkan grid
-	 * yang diambil dari posisi koordinat menurut pixel.
+	 * Get position from objects based on grid
+	 * taken from the coordinate position according to pixel.
 	 * 
-	 * @return posisi tile berdasarkan grid.
+	 * @return Tile Position based on grid.
 	 */
     public Position getPosition() {
 		int x = (getY() - Level.TILEBASE_X) / Level.TILESIZE;
@@ -26,9 +26,9 @@ public abstract class Tile extends Sprite {
     }
     
 	/**
-	 * Mendapatkan array yang berisi tile-tile disekitarnya,
-	 * yaitu: atas, kanan, bawah, kiri, 
-	 * kanan atas, kiri atas, kanan bawah, dan kiri bawah.
+	 * Gets an array containing the surrounding tiles,
+	 * thats: up, right, down, left, 
+	 * top right, top left, bottom right and bottom left.
 	 * 
 	 * @return array tile-tile disekitarnya.
 	 */
