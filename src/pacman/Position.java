@@ -1,7 +1,7 @@
 package pacman;
 
 /**
- * Objek posisi untuk posisi tile berdasarkan grid.
+ * Object position for tile position berdasarkan grid.
  */
 public class Position {
 	private int x, y;
@@ -33,11 +33,11 @@ public class Position {
 	}
 
 	/**
-	 * Mendapatkan jarak dari 2 posisi.
+	 * Get distance from 2 position.
 	 * 
-	 * @param from Posisi awal
-	 * @param to Posisi akhir
-	 * @return jarak antara 2 posisi
+	 * @param from first position
+	 * @param to last position
+	 * @return distance between 2 position
 	 */
 	public static int getDistance(Position from, Position to) {
 		return Math.abs(from.x() - to.x())

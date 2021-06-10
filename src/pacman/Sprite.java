@@ -5,7 +5,7 @@ import java.awt.Rectangle;
 import javax.swing.ImageIcon;
 
 /** 
- * Objek sprite (gambar) untuk game.
+ * Sprite object (picture) for game.
 */
 public class Sprite {
     protected int x, y;
@@ -67,9 +67,9 @@ public class Sprite {
     }
 
     /**
-     * Mendapatkan Rectangle yang berupa batas dari sprite.
+     * Get Rectangle which is the boundary of the sprite.
      * 
-     * @return Rectangle batas dari tile.
+     * @return Rectangle border of tile.
      */
     public Rectangle getBounds() {
         return new Rectangle(x + width/2, y + height/2, width/2, height/2);

@@ -30,7 +30,7 @@ public abstract class Tile extends Sprite {
 	 * thats: up, right, down, left, 
 	 * top right, top left, bottom right and bottom left.
 	 * 
-	 * @return array tile-tile disekitarnya.
+	 * @return array of tiles around it.
 	 */
     public static int[] getAdjacentTiles(int x, int y, int[][] tile) {
 		int[] tiles = new int[8];
