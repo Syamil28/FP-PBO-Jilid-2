@@ -1,7 +1,7 @@
 package pacman;
 
 /**
- * Objek wall/dinding dari maze pacman.
+ * Wall object from maze pacman.
  */
 public class Wall extends Tile {
 	
@@ -9,19 +9,19 @@ public class Wall extends Tile {
 	protected String imageName;
 
 	/**
-	 * Inisialisasi dan konstruktor objek wall.
-	 * Menggunakan paramater untuk menentukan asset yang tepat.
+	 * Initialitation and constructor of wall.
+	 * Using parameters to determine the right asset.
 	 * 
-	 * @param x	posisi x
-	 * @param y	posisi y
-	 * @param up tile atas
-	 * @param right	tile kanan
-	 * @param down tile bawah
-	 * @param left tile kiri
-	 * @param topL tile kiri atas
-	 * @param topR tile kanan atas
-	 * @param bottomL tile kiri bawah
-	 * @param bottomR tile kanan bawah
+	 * @param x	x position
+	 * @param y y posisition
+	 * @param up top tile
+	 * @param right	right tile
+	 * @param down bottom tile
+	 * @param left left tile
+	 * @param topL top left tile
+	 * @param topR top right tile
+	 * @param bottomL bottom left tile
+	 * @param bottomR bottom right tile
 	 */
 	public Wall(int x, int y, int up, int right, int down, int left, int topL, int topR, int bottomL, int bottomR) {
 		super(x, y);

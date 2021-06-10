@@ -1,7 +1,7 @@
 package pacman;
 
 /**
- * Kelas untuk struktur data tree.
+ * Class for data strcuture tree.
  */
 public class Tree {
 	protected TreeNode root;
@@ -15,10 +15,10 @@ public class Tree {
 	}
 	
 	/**
-	 * Memasukkan node ke tree juga set parent untuk node tersebut.
+	 * Insert node to tree also set parent for the node.
 	 * 
-	 * @param node Node yang dimasukkan
-	 * @param parent Parent dari node yang dimasukkan
+	 * @param node Inserted Node
+	 * @param parent Parent from inserted node
 	 */
 	public void insert(TreeNode node, TreeNode parent) {
 		if (parent != null) {

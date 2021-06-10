@@ -3,7 +3,7 @@ package pacman;
 import java.util.ArrayList;
 
 /**
- * Node untuk {@link pacman.Tree}
+ * Node for {@link pacman.Tree}
  */
 public class TreeNode {
 	protected Position data;
@@ -11,9 +11,9 @@ public class TreeNode {
 	protected ArrayList<TreeNode> children;
 	
 	/**
-	 * Konstruktor dengan 1 parameter.
+	 * constructor with 1 parameter.
 	 * 
-	 * @param data	Data dari node
+	 * @param data	Data from node
 	 */
 	public TreeNode(Position data) {
 		this.data = data;
@@ -22,9 +22,9 @@ public class TreeNode {
 	}
 	
 	/**
-	 * Menambahkan child.
+	 * Add child.
 	 * 
-	 * @param node Node anak yang ditambahkan.
+	 * @param node Added child node.
 	 */
 	public void addChild(TreeNode node) {
 		this.children.add(node);
