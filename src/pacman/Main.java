@@ -6,8 +6,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 /**
- * Project Kuis 2 PAA E
- * Main class untuk project ini.
+ * Project Quiz 2 DAA E
+ * Main class for this project.
  * 
  * @author Daanii Kusnanta
  * @author M. Nur Abdurrauf

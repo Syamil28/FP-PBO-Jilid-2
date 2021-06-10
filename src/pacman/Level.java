@@ -15,9 +15,8 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 /**
- * Kelas ini adalah objek level saat permainan.
- * Kelas ini mengatur update setiap objek dalam permainan juga inisialisasinya
- * serta maze dari pacman.
+ * Class for level object if the game.
+ * This class updates each object and initiate maze for the game.
  */
 @SuppressWarnings("serial")
 public class Level extends JPanel implements ActionListener {
@@ -67,7 +66,7 @@ public class Level extends JPanel implements ActionListener {
 	}
 
     /**
-     * Inisialisasi level (mmebuat objek, inisialisasi timer, dll)
+     * initiate level (create objek, initiate timer, etc)
      */
     protected void initLevel() {
         addKeyListener(new TAdapter());
@@ -90,7 +89,7 @@ public class Level extends JPanel implements ActionListener {
     }
 
     /**
-     * Inisialisasi tile.
+     * Initiate tile.
      */
     public void initTiles() {
         tiles = new ArrayList<>();          
@@ -102,7 +101,7 @@ public class Level extends JPanel implements ActionListener {
     }
 
     /**
-     * Menggambar objek.
+     * Draw object.
      */
     @Override
     public void paintComponent(Graphics g) {
@@ -118,7 +117,7 @@ public class Level extends JPanel implements ActionListener {
     }
 
     /**
-     * Menggambar semua objek.
+     * Draw all object.
      * 
      * @param g Graphic
      */
@@ -143,7 +142,7 @@ public class Level extends JPanel implements ActionListener {
     }
 
     /**
-     * Menggambar screen game over.
+     * Draw game over screen.
      * 
      * @param g graphics.
      */
@@ -173,7 +172,7 @@ public class Level extends JPanel implements ActionListener {
     }
 
     /**
-     * Cek status ingame.
+     * Check ingame status.
      */
     private void inGame() { 
         if (!ingame) {
@@ -182,7 +181,7 @@ public class Level extends JPanel implements ActionListener {
     }
 
     /**
-     * Update objek pacman
+     * Update pacman object.
      */
     private void updatePacman() {
         if (pacman.isVisible()) {
@@ -195,7 +194,7 @@ public class Level extends JPanel implements ActionListener {
     }
 
     /**
-     * Update objek ghost
+     * Update ghost object.
      */
     private void updateGhost() {
         if (ghost.isVisible()) {
@@ -205,11 +204,11 @@ public class Level extends JPanel implements ActionListener {
     }
 
     /**
-     * Membuat tile.
+     * Create tile.
      * 
      * @param x index x
      * @param y index y
-     * @return objek Tile baru
+     * @return new Tile object
      */
     private Tile newTile(int x, int y) {
         int posY = TILEBASE_X + x * TILESIZE;
@@ -236,7 +235,7 @@ public class Level extends JPanel implements ActionListener {
     }
 
     /**
-     * Cek collision setiap objek.
+     * Check collision for each object.
      */
     public void checkCollisions() {
     
@@ -271,7 +270,7 @@ public class Level extends JPanel implements ActionListener {
     }
 
     /**
-     * Kelas adapter untuk keyboard
+     * Adapter class for Key Event
      */
     private class TAdapter extends KeyAdapter { 
         

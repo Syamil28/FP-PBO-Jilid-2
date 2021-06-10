@@ -6,7 +6,7 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 
 /**
- * Objek karakter pacman
+ * Character object for pacman
  */
 public class Pacman extends Character {
 	
@@ -43,11 +43,11 @@ public class Pacman extends Character {
 	}
 
 	/**
-	 * Kontrol menggunakan keyboard dengan KeyEvent.
-	 * Mengubah dx dan dy berdasarkan event keyboard.
+	 * Control using keyboard event.
+	 * Change dx and dy according to the pressed key.
 	 * 
-	 * @param e KeyEvent yang dideteksi
-	 * @param tile array tile berupa maze permainan
+	 * @param e KeyEvent that is being detected.
+	 * @param tile array tile represent the level maze
 	 */
 	public void keyPressed(KeyEvent e, int[][] tile) {
 		
@@ -83,13 +83,13 @@ public class Pacman extends Character {
 	}
 	
 	/**
-	 * Mengecek collision pacman dengan semua tile:
-	 * - Kembalikan 1 jika collision dengan point
-	 * - Kembalikan 2 jika collision dengan cherry
-	 * - Kembalikan -1 jika tidak collision dengan apapun.
+	 * Check collision between pacman and all tiles:
+	 * - return 1 when collided with point
+	 * - return 2 when collided with cherry
+	 * - return -1 when not collided with anything
 	 * 
-	 * @param tile
-	 * @return nilai berdasarkan status collision.
+	 * @param tile tile maze
+	 * @return value based on collision.
 	 */
 	public int checkTileCollision(Tile tile) {
 		Rectangle t = tile.getBounds();
@@ -109,11 +109,11 @@ public class Pacman extends Character {
 	}
 	
 	/**
-	 * Mengecek collision dengan ghost.
-	 * Jika collision buat ghost tidak visible.
+	 * Check pacman collision with code.
+	 * When collided, make ghost invisible.
 	 * 
-	 * @param ghost Objek ghost
-	 * @return boolean status collision.
+	 * @param ghost Ghost object
+	 * @return boolean collision status.
 	 */
 	public boolean checkGhostCollision(Ghost ghost) {
 		Rectangle g = ghost.getBounds();
@@ -132,9 +132,9 @@ public class Pacman extends Character {
 	}
 	
 	/**
-	 * Update status mengejar ghost dan waktu saat mengejar.
+	 * Update chasing status and chase time.
 	 * 
-	 * @return status mengejar ghost.
+	 * @return status if chasing or not.
 	 */
 	public boolean updateChase() {
 		if(chasing) {

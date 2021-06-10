@@ -1,7 +1,7 @@
 package pacman;
 
 /**
- * Objek tile berupa point.
+ * Tile object for point.
  */
 public class Point extends Tile {
 

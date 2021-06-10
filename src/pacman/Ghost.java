@@ -4,7 +4,6 @@ import java.awt.Image;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
-import java.util.HashSet;
 import java.util.Iterator;
 import javax.swing.ImageIcon;
 
@@ -184,11 +183,11 @@ public class Ghost extends Character {
 	}
 
 	/**
-	 * Mencari pacman dengan BFS.
+	 * Searching Pacman with BFS.
 	 * 
-	 * @param tile Maze permainan
-	 * @param pacman Objek pacman
-	 * @return node saat pacman ditemukan.
+	 * @param tile Maze level
+	 * @param pacman Pacman object
+	 * @return node when Pacman's position is found.
 	 */
 	private TreeNode searchPacman(int[][] tile, Pacman pacman) {	
 		Position pos = this.getPosition();
@@ -229,11 +228,11 @@ public class Ghost extends Character {
 	}
 
 	/**
-	 * Mencari posisi untuk lari dengan BFS.
+	 * Searching position to run from Pacman.
 	 * 
-	 * @param tile Maze permainan
-	 * @param pacman Objek pacman
-	 * @return node saat posisi lari ditemukan.
+	 * @param tile Maze lavel
+	 * @param pacman Pacman object
+	 * @return node when positoin to run is found.
 	 */
 	private TreeNode runFromPacman(int[][] tile, Pacman pacman) {	
 		Position pacmanPos = pacman.getPosition();
