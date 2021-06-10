@@ -60,6 +60,61 @@ public class Ghost extends Character {
 	}
 
 	/**
+	 * Memilih move selanjutnya berdasarkan status ghost.
+	 * Move selanjutnya dipilih berdasarkan method bersangkutan.
+	 * Setelah didapatkan move, ubah dx dan dy.
+	 * 
+	 * @param tile Maze permainan
+	 * @param pacman Objek pacman
+	 */
+	public void chooseNextMove(int[][] tile, Pacman pacman) {
+		
+		if(!moving) {
+		
+			Move nextMove;
+			Position pos = this.getPosition();
+			if(!scared) nextMove = getMove(searchPacman(tile, pacman));
+			else nextMove = getMove(runFromPacman(tile, pacman));
+			
+			if(nextMove == null) {
+				nextMove = Move.Stay;
+			}
+		
+			switch (nextMove) {
+				case Up:
+					dx = 0;
+					dy = (tile[pos.x()-1][pos.y()] != 1) ? (int)(-1 * Level.TILESIZE / frames) : 0;
+					break;
+			
+				case Right:
+					dx = (tile[pos.x()][pos.y()+1] != 1) ? (int)(1 * Level.TILESIZE / frames) : 0;
+					dy = 0;
+					break;
+				
+				case Down:
+					dx = 0;
+					dy = (tile[pos.x()+1][pos.y()] != 1) ? (int)(1 * Level.TILESIZE / frames) : 0;
+					break;
+				
+				case Left:
+					dx = (tile[pos.x()][pos.y()-1] != 1) ? (int)(-1 * Level.TILESIZE / frames) : 0;
+					dy = 0;
+					break;
+					
+				case Stay:
+					dx = 0;
+					dy = 0;
+					break;
+					
+				default:
+					break;
+			}
+			moving = true;
+			moveCount = 0;
+		}
+	}
+
+	/**
 	 * Mengembalikan move selanjutnya berdasarkan posisi node 
 	 * relatif dengan posisi pacman saat ini.
 	 * 
@@ -127,6 +182,50 @@ public class Ghost extends Character {
 			availableMoves.add(new Position(idxX, idxY+1));
 		
 		return availableMoves;
+	}
+
+	/**
+	 * Mencari pacman dengan BFS.
+	 * 
+	 * @param tile Maze permainan
+	 * @param pacman Objek pacman
+	 * @return node saat pacman ditemukan.
+	 */
+	private TreeNode searchPacman(int[][] tile, Pacman pacman) {	
+		Position pos = this.getPosition();
+		Position pacmanPos = pacman.getPosition();
+		
+		TreeNode node = new TreeNode(pos);
+		Tree searchTree = new Tree(node);
+		Deque<TreeNode> fringe = new ArrayDeque<TreeNode>();
+		HashSet<Position> visited = new HashSet<Position>();
+		fringe.add(node);
+		
+		while (!fringe.isEmpty()) {
+			node = fringe.pop();
+			visited.add(node.data);
+			System.out.printf("\nnode: %d %d\n", node.data.x(), node.data.y());
+			
+			if (node.data.equals(pacmanPos)) {
+				return node;
+			}
+			
+			ArrayList<Position> children = getAvailableMoves(node.data, node.parent, tile);
+			Iterator<Position> i = children.iterator();
+			
+			while (i.hasNext()) {
+				Position childPos = i.next();
+				System.out.printf("child: %d %d\n", childPos.x(), childPos.y());
+				
+				if(!visited.contains(childPos)) {
+					TreeNode child = new TreeNode(childPos);
+					fringe.addLast(child);
+					searchTree.insert(child, node);	
+				}
+			}
+			System.out.printf("fringe size: %d\n", fringe.size());
+		}
+		return node;
 	}
 
 	/**
